@@ -15,7 +15,7 @@ keras==2.13.1
 tqdm==4.66.1
 
 # Dataset download
-duckduckgo-search==3.9.6
+ddgs>=9.10.0
 requests==2.31.0
 
 # Visualization

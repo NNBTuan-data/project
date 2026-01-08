@@ -9,6 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 from ..config import (DATASET_DIR, CLASSES, NUM_IMAGES_PER_CLASS, 
                       MAX_DOWNLOAD_WORKERS, MIN_IMAGE_SIZE, DOWNLOAD_TIMEOUT)
+from ddgs import DDGS
 
 logger = logging.getLogger(__name__)
 SEARCH_QUERIES = {
@@ -75,11 +76,12 @@ class DatasetDownloader:
         
         for query in queries:
             try:
+                time.sleep(random.uniform(2.0, 4.0))
                 logger.info(f"  Đang tìm kiếm: '{query}'...")
                 print(f"  Tìm kiếm: '{query}'...")
                 
                 with DDGS() as ddgs:
-                    results = list(ddgs.images(query, max_results=200))
+                    results = list(ddgs.images(query, max_results=100))
                 
                 if not results or isinstance(results, bool):
                     logger.warning(f"    → Không có kết quả")
