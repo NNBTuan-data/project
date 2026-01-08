@@ -83,8 +83,6 @@ class LBPExtractor:
         
     def get_feature_dim(self) -> int:
         return self.grid_x * self.grid_y * self.bins
-
-
 if __name__ == "__main__":
     # Test LBPExtractor
     logging.basicConfig(level=logging.DEBUG)
@@ -93,6 +91,5 @@ if __name__ == "__main__":
     extractor = LBPExtractor()
     test_img = np.random.randint(0, 255, (128, 128), dtype=np.uint8)
     features = extractor.extract(test_img)
-    
     print(f"LBP feature dimension: {extractor.get_feature_dim()}")
     print(f"Actual features length: {len(features)}")

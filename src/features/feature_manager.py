@@ -1,13 +1,8 @@
-"""
-Module quản lý trích xuất đặc trưng (Feature Manager)
-Chuyển đổi từ extract_features.py
-"""
 import os
 import logging
 from pathlib import Path
 from typing import Tuple
 import numpy as np
-
 from ..config import (DATASET_DIR, FEATURES_DIR, COLOR_FEATURES_FILE,
                       LBP_FEATURES_FILE, HOG_FEATURES_FILE, LABELS_FILE,
                       COMBINED_FEATURES_FILE, IMAGE_SIZE, FEATURE_WEIGHTS)
@@ -16,83 +11,39 @@ from ..preprocessing.image_processor import ImageProcessor
 from .color_extractor import ColorExtractor
 from .lbp_extractor import LBPExtractor
 from .hog_extractor import HOGExtractor
-
 logger = logging.getLogger(__name__)
-
-
 class FeatureManager:
-    """
-    Class quản lý trích xuất đặc trưng từ dataset
-    Kết hợp Color, LBP, HOG extractors
-    """
-    
     def __init__(self, dataset_path: Path = None, output_dir: Path = None):
-        """
-        Khởi tạo FeatureManager
-        
-        Args:
-            dataset_path: Đường dẫn dataset
-            output_dir: Thư mục lưu features
-        """
         self.dataset_path = dataset_path or DATASET_DIR
         self.output_dir = output_dir or FEATURES_DIR
-        
         # Tạo thư mục output nếu chưa tồn tại
         self.output_dir.mkdir(exist_ok=True, parents=True)
-        
         # Khởi tạo các components
         self.dataset_loader = DatasetLoader(self.dataset_path)
         self.image_processor = ImageProcessor(target_size=IMAGE_SIZE)
         self.color_extractor = ColorExtractor()
         self.lbp_extractor = LBPExtractor()
         self.hog_extractor = HOGExtractor()
-        
         logger.info(f"Khởi tạo FeatureManager: dataset={self.dataset_path}, output={self.output_dir}")
-    
     def extract_all_features(self, show_progress: bool = True) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-        """
-        Trích xuất đặc trưng cho tất cả ảnh trong dataset
-        
-        Pipeline:
-        1. Load danh sách ảnh từ dataset
-        2. Với mỗi ảnh:
-           - Trích xuất Color Histogram
-           - Trích xuất LBP
-           - Trích xuất HOG
-        3. Lưu features ra file .npy
-        
-        Note: Ảnh lỗi sẽ bị bỏ qua để tránh lỗi array không đồng nhất
-        
-        Args:
-            show_progress: Hiển thị progress bar
-            
-        Returns:
-            (colors, lbp_features, hog_features, labels)
-        """
         # Bước 1: Load dataset
         logger.info("Đang load dataset...")
         paths, labels_all = self.dataset_loader.load_dataset()
-        
         logger.info(f"TRÍCH XUẤT ĐẶC TRƯNG TỪ {len(paths)} ẢNH")
         print(f"\n{'='*70}")
         print(f"TRÍCH XUẤT ĐẶC TRƯNG TỪ {len(paths)} ẢNH")
         print(f"{'='*70}\n")
-        
         # Khởi tạo danh sách lưu features
         color_list = []
         lbp_list = []
         hog_list = []
         valid_indices = []  # Track which images were successfully processed
-        
         # Determine actual feature dimensions from first successful image
         hog_feature_dim = None
-        
         if show_progress:
             print("Đang trích xuất đặc trưng...")
-        
         # Bước 2: Trích xuất features cho từng ảnh
         iterator = paths
-        
         for i, path in enumerate(iterator):
             try:
                 # 2.1. Đọc ảnh (grayscale + tiền xử lý)

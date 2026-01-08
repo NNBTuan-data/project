@@ -1,29 +1,16 @@
-"""
-SCRIPT 4: ĐÁNH GIÁ MODEL
-
-Lưu ý: Script này là wrapper đơn giản.
-Để đánh giá chi tiết, sử dụng trực tiếp:
-    python src_backup/evaluate.py --features features/features.npy --labels features/labels.npy --dataset dataset
-"""
 import sys
 sys.dont_write_bytecode = True
 import logging
 from pathlib import Path
-
 sys.path.insert(0, str(Path(__file__).parent.parent))
-
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s'
-)
-
-
+    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s')
 def main():
     """Thông báo về evaluation"""
     print("\n" + "="*70)
     print("BƯỚC 4: ĐÁNH GIÁ MODEL")
     print("="*70 + "\n")
-    
     print("⚠️  Lưu ý: Evaluation script đang sử dụng file cũ.")
     print()
     print("📝 Để đánh giá model, bạn có 2 cách:")
@@ -38,13 +25,11 @@ def main():
     print()
     print("="*70)
     print()
-
-
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n⚠️  Đã hủy bởi người dùng")
+        print("\n\n  Đã hủy bởi người dùng")
     except Exception as e:
-        print(f"\n❌ LỖI: {e}")
+        print(f"\n LỖI: {e}")
         sys.exit(1)

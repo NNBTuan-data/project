@@ -17,11 +17,13 @@ TEXT_DARK = "#f1f5f9"      # Light text
 TEXT_LIGHT = "#94a3b8"     # Muted text
 BORDER = "#334155"         # Border
 
+from ..config import GUI_WINDOW_SIZE
+
 # ================================
 # KÍCH THƯỚC
 # ================================
-# Cửa sổ chính - TO HƠN
-WINDOW_SIZE = "1600x900"
+# Cửa sổ chính - Responsive
+WINDOW_SIZE = GUI_WINDOW_SIZE
 
 # Frame sizes - TO HƠN
 PREVIEW_FRAME_SIZE = (520, 520)

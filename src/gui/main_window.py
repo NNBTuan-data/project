@@ -38,7 +38,14 @@ class MainWindow:
         self.master.title("NHẬN DIỆN ẢNH CHUYÊN NGHIỆP (NHÓM 2)")
         self.master.geometry(WINDOW_SIZE)
         self.master.configure(bg=BG_COLOR)
-        self.master.resizable(False, False)
+        # Allow resizing
+        self.master.resizable(True, True)
+        
+        # Auto maximize
+        try:
+            self.master.state('zoomed')
+        except:
+            pass
         
         # State variables
         self.current_image_path = None

@@ -83,8 +83,8 @@ TOP_K_RESULTS = 5
 # CNN / DEEP LEARNING PARAMS (NEW)
 # Model type
 CNN_MODEL_TYPE = "mobilenet"  # Đổi từ "resnet50" → "mobilenet" (nhẹ hơn, phù hợp data nhỏ)
-CNN_MODEL_PATH = MODEL_DIR / "cnn_model.h5"
-CNN_WEIGHTS_PATH = MODEL_DIR / "cnn_weights.h5"
+CNN_MODEL_PATH = MODEL_DIR / "cnn_model.keras"
+CNN_WEIGHTS_PATH = MODEL_DIR / "cnn_weights.keras"
 
 # Training hyperparameters
 CNN_EPOCHS = 80              # Tăng từ 50 → 80 epochs (quick win)
@@ -139,7 +139,7 @@ UI_COLORS = {
 }
 
 # Kích thước cửa sổ - TO HƠN
-GUI_WINDOW_SIZE = "1600x900"
+GUI_WINDOW_SIZE = "1080x720"
 
 # Kích thước thumbnail
 THUMBNAIL_SIZE = (120, 120)

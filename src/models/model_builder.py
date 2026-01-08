@@ -69,6 +69,9 @@ class ModelBuilder:
             layers.Dense(num_classes, activation='softmax', name='predictions')
         ], name='ResNet50_ImageRecognition')
         
+        # Explicitly build model to initialize weights and params
+        model.build((None, *input_shape))
+        
         logger.info(f"Model built: {model.count_params():,} total params")
         
         return model, base_model
@@ -137,6 +140,9 @@ class ModelBuilder:
             layers.Dense(num_classes, activation='softmax')
         ], name='MobileNetV2_ImageRecognition')
         
+        # Explicitly build model
+        model.build((None, *input_shape))
+        
         logger.info(f"MobileNetV2 built: {model.count_params():,} params")
         
         return model, base_model
@@ -196,6 +202,9 @@ class ModelBuilder:
             layers.Dropout(0.5),
             layers.Dense(num_classes, activation='softmax')
         ], name='Custom_CNN')
+        
+        # Explicitly build model
+        model.build((None, *input_shape))
         
         logger.info(f"Custom CNN built: {model.count_params():,} params")
         
